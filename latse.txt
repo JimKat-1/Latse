@@ -1,0 +1,112 @@
+// Is rare so not worth burdening the struct
+(strait Sick!)
+
+(trait Binding)
+
+(trait AnimalSound)
+
+(trait Animal ()
+  :require (LifeForm Matter (not LifeLessMatter))
+  (fn* sound (Self))
+  (fn* appearance (Self))
+  (fn* fuck (Self Self -> Self)))
+
+(struct Dog ()
+  sound::String
+  (String sound)
+  shape::Mesh)
+
+(type Ass ()
+  Red (a b c) |
+  Green (type a b c) |
+  Blue |
+  Yellow)
+
+(| Ass () |)
+
+(type Node (A)
+  Leaf A |
+  Branch (Vec (Node A)))
+
+(type Ass ()
+  Red ((String a) b c) |
+  Green |
+  Blue |
+  Yellow)
+
+(def x (f32 0xAF))
+(def x 0xAF::f32)
+
+(Range 1 100)
+(struct () t1 t2 t3)
+
+(range 1 4)::(map (fn (x) (* x x)))
+
+a:b:c               => (a (b:c))            => (a (b (c)))
+a:b                 => (a b)
+a:(b)               => (a (b))
+a:(b c):d           => (a (b c) d)
+a:b                 => (a b)
+a:b:c               => (a b:c)              => (a b c)
+a:b:c:d             => (a (b:c:d))          => (a (b (c:d)))        => (a (b (c (d))))
+a::b::c::d          => (d a::b::c)          => (d (c a::b))         => (d (c (b a)))
+a::b::(c)::d        => (d a::b::(c))        => (d (c a::b))         => (d (c (b a)))
+a::b::(c e f)::d    => (d a::b::(c e f))    => (d (c a::b e f)))    => (d (c (b a) e f)))
+echo ass | rg -i ss | some stuff
+(some (rg () -i ss) stuff)
+Vec:a
+
+v.iter().reduce(|c,x| c+x, 0)
+v::iter::(reduce (fn (c x) (+ c x)) 0)
+(reduce v::iter (fn (c x) (+ c x)) 0)
+(reduce (iter v) (fn (c x) (+ c x)) 0)
+
+foo::(T1 T2 T3) ==> ((T1 T2 T3) foo)
+foo::T1 ==> (T1 foo)
+
+// (struct Dog ()
+//   (String sound)
+//   (Mesh shape))
+
+(struct Ass ()
+  fun_ptr::ref)
+
+ass-ptr::(ref Ass)
+((ref Ass) ass-ptr)
+
+5 + 10
+{num 5+4*sin(x)}
+(echo "ass")
+
+(impl Animal Dog)
+
+(get-traits some-dog-in-particular)
+
+(trait Ass ()
+  (fn foo (x))
+  (fn* goo (x)))
+
+(trait Aligned (a)
+  (data aligmnent::usize))
+
+(trait Sized (s)
+  (data size::usize))
+
+(def x 410::u32)
+
+(def (a b c d e f g) ()::u32)
+(def (u32 (a b c d)))
+
+(trait Repr ()
+  :impl (Sticky)
+  (data accessors::(Vec (Option T)))
+  (data size::usize)
+  (fn repr (self)))
+
+(trait StickyBind)
+
+(fn* (a b c))
+
+(match _
+  (Some x) (print x)
+  (None)   (print "aint nothin"))
