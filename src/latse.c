@@ -19,7 +19,7 @@ typedef struct {
 typedef struct {
     qword name[];
 } ValueSpace;
-iiiiiiiiiiiiiii
+
 enum Reprs {
     I8  = 0,
     I16 = 1,
