@@ -19,6 +19,19 @@ typedef struct {
 typedef struct {
     qword name[];
 } ValueSpace;
+iiiiiiiiiiiiiii
+enum Reprs {
+    I8  = 0,
+    I16 = 1,
+    I32 = 2,
+    I64 = 3,
+    U8  = 4,
+    U16 = 5,
+    U32 = 6,
+    U64 = 7,
+    F32 = 8,
+    F64 = 9,
+}
 
 int main(int argc, char **argv) {
     // for (int i = 1; i<argc; i++) {
