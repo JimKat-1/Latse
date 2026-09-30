@@ -1,6 +1,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifndef UTILS
+#define UTILS 1
+
 typedef uint8_t byte;
 typedef uint16_t word;
 typedef uint32_t dword;
@@ -17,7 +20,8 @@ uint64_t onehot_roundup(uint64_t n) {
     return n;
 }
 
-bool inline in(const void *x, const void *elems, size_t count, size_t elem_size) {
+bool inline
+in(const void *x, const void *elems, size_t count, size_t elem_size) {
     for (size_t i = 0; i < count; i++) {
         const void *elem = (const char *)elems + i * elem_size;
 
@@ -66,6 +70,41 @@ typedef struct {
     size_t len;
     char *s;
 } StringView;
+
+String
+String_from_C(char *s) {
+    String r;
+    r.s = s;
+    r.len = strlen(s);
+    return r;
+}
+
+bool
+streq(StringView s1, StringView s2) {
+    if (s1.len != s2.len) {
+        return false;
+    } else {
+        for (size_t i = 0; i<s1.len; i++) {
+            if (s1.s[i] != s2.s[i])
+                return false;
+        }
+    }
+
+    return true;
+}
+
+bool
+streq_c(StringView s1, char* s2) {
+    for (size_t i = 0; i<s1.len; i++) {
+        if (s1.s[i] != s2[i])
+            return false;
+    }
+
+    if (s2[s1.len] != 0)
+        return false;
+
+    return true;
+}
 
 typedef UTF8char int;
 
@@ -126,11 +165,14 @@ int UTF8char_get(String str, size_t i, UTF8char *out) {
 //    return c &
 //}
 
-String String_malloc(size_t len) {
+String
+String_malloc(size_t len) {
     char *s = malloc(len+1);
     s[len] = 0;
     return String {.len=len, .s=s};
 }
+
+/* -----------------------------Arena----------------------------- */
 
 // A stack (which will probably be almost entirely used as an arena)
 typedef struct {
@@ -139,7 +181,8 @@ typedef struct {
     void *stack;
 } Arena;
 
-Arena Arena_new(size_t capacity) {
+Arena
+Arena_new(size_t capacity) {
     void *p = malloc(capacity);
     if (!p) {
         fprintf(stderr, "Out of memory\n");
@@ -152,7 +195,8 @@ Arena Arena_new(size_t capacity) {
 }
 
 #define ARENA_PUSH(s, o) Arena_push(s, &o, sizeof(o))
-Arena *Arena_push(Arena *s, void *o, size_t size) {
+Arena *
+Arena_push(Arena *s, void *o, size_t size) {
     if (s->capacity > s.si + 1 + size) {
         s->capacity *= 2;
         s->stack = realloc(s->stack, s->capacity);
@@ -168,7 +212,8 @@ Arena *Arena_push(Arena *s, void *o, size_t size) {
     return s;
 }
 
-Arena *Arena_resize(Arena *s, size_t size) {
+Arena*
+Arena_resize(Arena *s, size_t size) {
     void *p = realloc(s->stack, s->capacity);
     if (!p) {
         fprintf(stderr, "Out of memory\n");
@@ -178,8 +223,34 @@ Arena *Arena_resize(Arena *s, size_t size) {
     return s;
 }
 
-void *Arena_pop(Arena *s, size_t size) {
+void *
+Arena_pop(Arena *s, size_t size) {
     if (s->si+1 < size)
     s->stack -= size;
     return s->stack - size;
 }
+
+void *
+Arena_vec_index(Arena *s, size_t elem_size, size_t i) {
+    return s->stack + elem_size*i;
+}
+
+/* -----------------------------Arena----------------------------- */
+
+typedef struct {
+    size_t nbits;
+    uint64_t *bits;
+} BitArray;
+
+// BitArray
+// BitArray_new(size_t nbits, bool init) {
+//     BitArray r;
+//     r.nbits = nbits;
+// 
+//     if (n_bits <= 64) {
+//         (uint64_t)r.bits = 0;
+//         if (bits) r.bits ~= r.bits;
+//     }
+// }
+
+#endif
