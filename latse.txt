@@ -12,15 +12,20 @@
   (fn* fuck (Self Self -> Self)))
 
 (struct Dog ()
-  sound::String
-  (String sound)
-  shape::Mesh)
+  String: sound
+  Mesh: shape)
+
+(def x u32: 4)
 
 (type Ass ()
-  Red (a b c) |
-  Green (type a b c) |
+  Red ((u32: a) u32: b u32: c) |
+  Yello (u32: a u32: b u32: c) |
+  Green (a b c) |
   Blue |
   Yellow)
+
+(Ass: x)
+(ref u32: x)
 
 (| Ass () |)
 
